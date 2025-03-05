@@ -8,6 +8,7 @@
 		<IncludeBuildOutput>false</IncludeBuildOutput>
 		<EnforceExtendedAnalyzerRules>true</EnforceExtendedAnalyzerRules>
 		<DevelopmentDependency>true</DevelopmentDependency>
+		<PackageProjectUrl>$(RepositoryProjectRoot)/Albatross.Messaging.CodeGen</PackageProjectUrl>
 	</PropertyGroup>
 	<ItemGroup>
 		<PackageReference Include="Humanizer.Core" Version="2.14.1" GeneratePathProperty="true" PrivateAssets="all" />

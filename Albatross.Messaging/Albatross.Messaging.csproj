@@ -3,17 +3,18 @@
 	<PropertyGroup>
 		<TargetFramework>net8.0</TargetFramework>
 		<Nullable>enable</Nullable>
-		<Description>This assembly contains messaging implementation using ZeroMQ.  Currently it supports pubsub and command queue pattern.</Description>
+		<Description>A durable messaging library built on top of ZeroMQ</Description>
 		<LangVersion>Latest</LangVersion>
+		<PackageProjectUrl>$(RepositoryProjectRoot)/Albatross.Messaging</PackageProjectUrl>
 	</PropertyGroup>
 	<ItemGroup>
 		<PackageReference Include="Albatross.Collections" Version="7.5.7" />
-		<PackageReference Include="Albatross.Config" Version="7.5.8" />
+		<PackageReference Include="Albatross.Config" Version="7.5.9" />
 		<PackageReference Include="Albatross.IO" Version="8.0.0" />
 		<PackageReference Include="Albatross.Math" Version="7.5.7" />
-		<PackageReference Include="Albatross.Reflection" Version="7.5.7" />
+		<PackageReference Include="Albatross.Reflection" Version="7.5.9" />
 		<PackageReference Include="Albatross.Serialization" Version="7.5.8" />
-		<PackageReference Include="Albatross.Text" Version="7.5.8" />
+		<PackageReference Include="Albatross.Text" Version="8.0.1" />
 		<PackageReference Include="Albatross.Threading" Version="7.5.7" />
 		<PackageReference Include="CoenM.Encoding.Z85e" Version="1.2.1" />
 		<PackageReference Include="Microsoft.Extensions.Hosting.Abstractions" Version="8.0.1" />
