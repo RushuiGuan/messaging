@@ -1,0 +1,40 @@
+{
+  "profiles": {
+    "test-threading": {
+      "commandName": "Project",
+      "commandLineArgs": "test-threading"
+    },
+    "queue-status": {
+      "commandName": "Project",
+      "commandLineArgs": "queue-status"
+    },
+    "ping": {
+      "commandName": "Project",
+      "commandLineArgs": "ping"
+    },
+    "add": {
+      "commandName": "Project",
+      "commandLineArgs": "add  -i client-add -c 100"
+    },
+    "long-running": {
+      "commandName": "Project",
+      "commandLineArgs": "long-running -d 100 -c 20"
+    },
+    "my-cmd3": {
+      "commandName": "Project",
+      "commandLineArgs": "my-cmd3"
+    },
+    "custom-dealer-client": {
+      "commandName": "Project",
+      "commandLineArgs": "test-custom-dealer-client"
+    },
+    "bad-cmd": {
+      "commandName": "Project",
+      "commandLineArgs": "bad-cmd"
+    },
+    "effiency-test": {
+      "commandName": "Project",
+      "commandLineArgs": "efficiency-test -f .\\Sample.Utility\\TestCases\\SingleIOBound-callback.json"
+    }
+  }
+}

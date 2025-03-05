@@ -1,0 +1,19 @@
+{
+	"profiles": {
+		"Local": {
+			"commandName": "Project",
+			"launchBrowser": true,
+			"launchUrl": "swagger",
+			"applicationUrl": "http://localhost:42000"
+		},
+		"Staging": {
+			"commandName": "Project",
+			"launchBrowser": true,
+			"launchUrl": "swagger",
+			"environmentVariables": {
+				"ASPNETCORE_ENVIRONMENT": "staging"
+			},
+			"applicationUrl": "http://localhost:42000"
+		}
+	}
+}

@@ -1,0 +1,12 @@
+<?xml version="1.0" encoding="utf-8"?>
+<Project Sdk="Microsoft.NET.Sdk">
+	<PropertyGroup>
+		<TargetFramework>net8.0</TargetFramework>
+		<Nullable>enable</Nullable>
+	</PropertyGroup>
+	<ItemGroup>
+		<PackageReference Include="Albatross.Config" Version="7.5.8" />
+		<PackageReference Include="Albatross.WebClient" Version="7.5.9" />
+		<ProjectReference Include="..\Sample.Core\Sample.Core.csproj" />
+	</ItemGroup>
+</Project>

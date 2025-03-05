@@ -1,0 +1,22 @@
+<?xml version="1.0" encoding="utf-8"?>
+<Project Sdk="Microsoft.NET.Sdk">
+	<PropertyGroup>
+		<OutputType>Exe</OutputType>
+		<TargetFramework>net8.0</TargetFramework>
+		<Nullable>enable</Nullable>
+	</PropertyGroup>
+	<ItemGroup>
+		<PackageReference Include="Albatross.CodeAnalysis.MSBuild" Version="7.7.0" />
+		<PackageReference Include="Albatross.Testing" Version="7.6.0" />
+		<PackageReference Include="Microsoft.CodeAnalysis.CSharp" Version="4.12.0" />
+		<PackageReference Include="Microsoft.NET.Test.Sdk" Version="17.11.1" />
+		<PackageReference Include="xunit.runner.visualstudio" Version="2.8.2">
+			<PrivateAssets>all</PrivateAssets>
+			<IncludeAssets>runtime; build; native; contentfiles; analyzers; buildtransitive</IncludeAssets>
+		</PackageReference>
+	</ItemGroup>
+	<ItemGroup>
+		<ProjectReference Include="..\Albatross.Messaging.CodeGen\Albatross.Messaging.CodeGen.csproj" />
+		<ProjectReference Include="..\Albatross.Messaging\Albatross.Messaging.csproj" />
+	</ItemGroup>
+</Project>
