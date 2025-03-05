@@ -3,7 +3,7 @@
 	<PropertyGroup>
 		<TargetFramework>netstandard2.1</TargetFramework>
 		<Nullable>enable</Nullable>
-		<PackageProjectUrl>$(RepositoryProjectRoot)/Albatross.MessagingCore</PackageProjectUrl>
+		<PackageProjectUrl>$(RepositoryProjectRoot)/Albatross.Messaging.Core</PackageProjectUrl>
 	</PropertyGroup>
 	<ItemGroup>
 		<None Include="..\..\icon.png">
