@@ -21,7 +21,7 @@ namespace Sample.Utility {
 		}
 		public override async Task<int> InvokeAsync(InvocationContext context) {
 			using var stream = this.options.InputFile.OpenRead();
-			var commands = await JsonSerializer.DeserializeAsync<EfficiencyTestComand[]>(stream, Albatross.Serialization.ReducedFootprintJsonSettings.Value.Default);
+			var commands = await JsonSerializer.DeserializeAsync<EfficiencyTestComand[]>(stream, Albatross.Serialization.Json.ReducedFootprintJsonSettings.Value.Default);
 			var ids = new List<ulong>();
 			if (commands != null) {
 				foreach (var item in commands) {
