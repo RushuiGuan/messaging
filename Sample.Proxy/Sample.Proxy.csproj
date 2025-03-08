@@ -6,7 +6,7 @@
 	</PropertyGroup>
 	<ItemGroup>
 		<PackageReference Include="Albatross.Config" Version="7.5.9" />
-		<PackageReference Include="Albatross.WebClient" Version="7.5.9" />
+		<PackageReference Include="Albatross.WebClient" Version="7.5.11" />
 		<ProjectReference Include="..\Sample.Core\Sample.Core.csproj" />
 	</ItemGroup>
 </Project>
