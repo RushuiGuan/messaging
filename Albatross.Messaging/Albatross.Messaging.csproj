@@ -23,11 +23,11 @@
 		<ProjectReference Include="..\Albatross.Messaging.Core\Albatross.Messaging.Core.csproj" />
 	</ItemGroup>
 	<ItemGroup>
-		<None Include="..\..\icon.png">
+		<None Include="..\icon.png">
 			<Pack>True</Pack>
 			<PackagePath>\</PackagePath>
 		</None>
-		<None Include="..\..\LICENSE">
+		<None Include="..\LICENSE">
 			<Pack>True</Pack>
 			<PackagePath>\</PackagePath>
 		</None>
