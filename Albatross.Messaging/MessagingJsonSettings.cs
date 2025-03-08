@@ -1,18 +1,19 @@
-﻿using System;
+﻿using Albatross.Serialization.Json;
+using System;
 using System.Text.Json;
 
 namespace Albatross.Messaging {
-	public class MessagingJsonSettings : Serialization.Json.IJsonSettings {
-		public JsonSerializerOptions Default { get; private set; }
-		public JsonSerializerOptions Alternate => throw new NotSupportedException();
+	public class MessagingJsonSettings : IJsonSettings {
+		public JsonSerializerOptions Value { get; }
 
 		public MessagingJsonSettings() {
-			Default = new JsonSerializerOptions {
+			Value = new JsonSerializerOptions {
 				PropertyNamingPolicy = JsonNamingPolicy.CamelCase,
 				DefaultIgnoreCondition = System.Text.Json.Serialization.JsonIgnoreCondition.WhenWritingNull,
 			};
 		}
 		static readonly Lazy<MessagingJsonSettings> lazy = new Lazy<MessagingJsonSettings>();
-		public static MessagingJsonSettings Value => lazy.Value;
+		public static IJsonSettings Instance => lazy.Value;
+
 	}
 }

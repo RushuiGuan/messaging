@@ -29,7 +29,7 @@ namespace Albatross.Messaging.Commands {
 
 		public CommandQueueItem CreateItem(CommandRequest request) {
 			if (registrations.TryGetValue(request.CommandName, out var registration)) {
-				var command = JsonSerializer.Deserialize(request.Payload, registration.CommandType, MessagingJsonSettings.Value.Default)
+				var command = JsonSerializer.Deserialize(request.Payload, registration.CommandType, MessagingJsonSettings.Instance.Value)
 					?? throw new InvalidOperationException($"cannot deserialize command object of type {registration.CommandType.FullName} for {request.Id}");
 				var queueName = registration.GetQueueName(request.Id, command, provider);
 				var queue = this.commandQueues.GetOrAdd(queueName, () => {

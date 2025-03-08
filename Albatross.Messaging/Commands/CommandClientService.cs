@@ -93,7 +93,7 @@ namespace Albatross.Messaging.Commands {
 			if (!commandCallbacks.TryAdd(id, callback)) {
 				throw new InvalidOperationException($"Cannot create command callback because of duplicate message id: {id}");
 			}
-			var bytes = JsonSerializer.SerializeToUtf8Bytes(command, type, MessagingJsonSettings.Value.Default);
+			var bytes = JsonSerializer.SerializeToUtf8Bytes(command, type, MessagingJsonSettings.Instance.Value);
 			var request = new CommandRequest(string.Empty, id, type.GetCommandName(), fireAndForget ? CommandMode.FireAndForget : CommandMode.Callback, bytes);
 			dealerClient.SubmitToQueue(request);
 			return callback.Task;

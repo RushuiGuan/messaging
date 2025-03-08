@@ -1,4 +1,5 @@
-﻿using Albatross.CommandLine;
+﻿using Albatross.Serialization.Json;
+using Albatross.CommandLine;
 using Microsoft.Extensions.Logging;
 using Microsoft.Extensions.Options;
 using Sample.Core.Commands;
@@ -21,7 +22,7 @@ namespace Sample.Utility {
 		}
 		public override async Task<int> InvokeAsync(InvocationContext context) {
 			using var stream = this.options.InputFile.OpenRead();
-			var commands = await JsonSerializer.DeserializeAsync<EfficiencyTestComand[]>(stream, Albatross.Serialization.Json.ReducedFootprintJsonSettings.Value.Default);
+			var commands = await JsonSerializer.DeserializeAsync<EfficiencyTestComand[]>(stream, ReducedFootprintJsonSettings.Instance.Value);
 			var ids = new List<ulong>();
 			if (commands != null) {
 				foreach (var item in commands) {

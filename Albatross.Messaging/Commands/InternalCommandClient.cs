@@ -44,7 +44,7 @@ namespace Albatross.Messaging.Commands {
 		private Task<ulong> Send(object command, bool priority, int timeout = 0) {
 			var type = command.GetType();
 			using var stream = new MemoryStream();
-			JsonSerializer.Serialize(stream, command, type, MessagingJsonSettings.Value.Default);
+			JsonSerializer.Serialize(stream, command, type, MessagingJsonSettings.Instance.Value);
 			// internal commands have the route of "internal" and can use the ids of the router server
 			var id = routerServer.Counter.NextId();
 			context.InternalCommands.Add(id);

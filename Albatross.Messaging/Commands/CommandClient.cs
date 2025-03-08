@@ -79,7 +79,7 @@ namespace Albatross.Messaging.Commands {
 			ulong id = await base.Submit(command, false, timeout);
 			var callback = GetCallback(id);
 			var data = await callback.Task;
-			return JsonSerializer.Deserialize<T>(data, Messaging.MessagingJsonSettings.Value.Default);
+			return JsonSerializer.Deserialize<T>(data, Messaging.MessagingJsonSettings.Instance.Value);
 		}
 
 		public override void OnCommandCallback(ulong id, string commandType, byte[] message) {

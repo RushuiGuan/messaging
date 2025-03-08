@@ -6,7 +6,7 @@
 		<ErrorOnDuplicatePublishOutputFiles>false</ErrorOnDuplicatePublishOutputFiles>
 	</PropertyGroup>
 	<ItemGroup>
-		<PackageReference Include="Albatross.Hosting" Version="7.6.2" />
+		<PackageReference Include="Albatross.Hosting" Version="8.0.0" />
 		<ProjectReference Include="..\Sample\Sample.csproj" />
 	</ItemGroup>
 	<ItemGroup>

@@ -69,7 +69,7 @@ namespace Albatross.Messaging.Commands {
 
 					if (item.Registration.HasReturnType) {
 						var stream = new MemoryStream();
-						JsonSerializer.Serialize(stream, result, item.Registration.ResponseType, MessagingJsonSettings.Value.Default);
+						JsonSerializer.Serialize(stream, result, item.Registration.ResponseType, MessagingJsonSettings.Instance.Value);
 						item.Reply = new CommandReply(item.Route, item.Id, item.CommandName, stream.ToArray());
 					} else {
 						item.Reply = new CommandReply(item.Route, item.Id, item.CommandName, Array.Empty<byte>());
