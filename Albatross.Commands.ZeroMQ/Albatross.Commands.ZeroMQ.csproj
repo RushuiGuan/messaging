@@ -1,0 +1,35 @@
+﻿<Project Sdk="Microsoft.NET.Sdk">
+
+	<PropertyGroup>
+		<TargetFramework>net8.0</TargetFramework>
+		<ImplicitUsings>enable</ImplicitUsings>
+		<Nullable>enable</Nullable>
+	</PropertyGroup>
+	<ItemGroup>
+		<PackageReference Include="Albatross.Collections" Version="7.5.8" />
+		<PackageReference Include="Albatross.Config" Version="7.5.9" />
+		<PackageReference Include="Albatross.IO" Version="8.0.1" />
+		<PackageReference Include="Albatross.Math" Version="7.5.8" />
+		<PackageReference Include="Albatross.Reflection" Version="7.5.9" />
+		<PackageReference Include="Albatross.Serialization.Json" Version="8.0.2" />
+		<PackageReference Include="Albatross.Text" Version="8.0.1" />
+		<PackageReference Include="Albatross.Threading" Version="7.5.8" />
+		<PackageReference Include="CoenM.Encoding.Z85e" Version="1.2.1" />
+		<PackageReference Include="Microsoft.Extensions.Hosting.Abstractions" Version="8.0.1" />
+		<PackageReference Include="NetMQ" Version="4.0.1.13" />
+	</ItemGroup>
+	<ItemGroup>
+		<None Include="..\icon.png">
+			<Pack>True</Pack>
+			<PackagePath>\</PackagePath>
+		</None>
+		<None Include="..\LICENSE">
+			<Pack>True</Pack>
+			<PackagePath>\</PackagePath>
+		</None>
+		<None Include="README.md" />
+	</ItemGroup>
+	<ItemGroup>
+	  <ProjectReference Include="..\Albatross.Commands\Albatross.Commands.csproj" />
+	</ItemGroup>
+</Project>
