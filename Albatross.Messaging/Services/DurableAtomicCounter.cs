@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Diagnostics;
 using System.IO;
 
 namespace Albatross.Messaging.Services {
@@ -15,7 +16,7 @@ namespace Albatross.Messaging.Services {
 		public ulong Counter => counter;
 		readonly uint WriteInterval;
 
-		public DurableAtomicCounter(string directory) : this(directory, "durable-atomic-counter.txt", 10000) { }
+		public DurableAtomicCounter(string directory) : this(directory, $"durable-atomic-counter-{Process.GetCurrentProcess().Id}.txt", 10000) { }
 		public DurableAtomicCounter(string directory, string name, uint writeInterval) {
 			if (writeInterval == 0) {
 				throw new ArgumentException("Write Interval cannot be 0");
