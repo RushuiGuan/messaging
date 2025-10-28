@@ -1,6 +1,7 @@
 ﻿using Albatross.CommandLine;
 using Albatross.Messaging.EventSource;
 using Albatross.Messaging.Messages;
+using Albatross.Text.CliFormat;
 using Microsoft.Extensions.Options;
 using System;
 using System.CommandLine.Invocation;
@@ -38,7 +39,7 @@ namespace Albatross.Messaging.Utility {
 				conversation = await SearchFile(conversation, file, messageFactory);
 			}
 			if (conversation != null) {
-				await conversation.Write(Console.Out);
+				Console.Out.CliPrint(conversation, null);
 			}
 			return 0;
 		}

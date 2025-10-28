@@ -7,9 +7,9 @@
 		<AssemblyName>sample</AssemblyName>
 	</PropertyGroup>
 	<ItemGroup>
-		<PackageReference Include="Albatross.CommandLine" Version="7.8.4" />
-		<PackageReference Include="Albatross.Dates" Version="7.5.10" />
-		<PackageReference Include="Albatross.Serialization.Json" Version="8.0.2" />
+		<PackageReference Include="Albatross.CommandLine" Version="7.8.7" />
+		<PackageReference Include="Albatross.Dates" Version="7.5.13" />
+		<PackageReference Include="Albatross.Serialization.Json" Version="9.0.0" />
 		<ProjectReference Include="..\Sample.Core\Sample.Core.csproj" />
 		<ProjectReference Include="..\Sample.Proxy\Sample.Proxy.csproj" />
 	</ItemGroup>

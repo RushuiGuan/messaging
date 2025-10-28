@@ -4,8 +4,7 @@ using Microsoft.Extensions.Configuration;
 namespace Albatross.Messaging.Configurations {
 	public class MessagingConfiguration : ConfigBase {
 
-		public override string Key => "messaging";
-		public MessagingConfiguration(IConfiguration configuration) : base(configuration) {
+		public MessagingConfiguration(IConfiguration configuration) : base(configuration, "messaging") {
 			string endpoint = configuration.GetRequiredEndPoint("messaging-server", false);
 			this.RouterServer.EndPoint = endpoint;
 			this.DealerClient.EndPoint = endpoint;

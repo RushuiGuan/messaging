@@ -94,20 +94,22 @@ namespace Albatross.Messaging.Services {
 			try {
 				if (running) {
 					var item = e.Queue.Dequeue();
-					switch (item) {
-						case IMessage msg:
-							this.Transmit(msg);
-							break;
-						default:
-							foreach (var service in this.transmitServices) {
-								if (service.ProcessQueue(this, item)) {
-									return;
+					if (item != null) {
+						switch (item) {
+							case IMessage msg:
+								this.Transmit(msg);
+								break;
+							default:
+								foreach (var service in this.transmitServices) {
+									if (service.ProcessQueue(this, item)) {
+										return;
+									}
 								}
-							}
-							if (!(item is ISystemMessage)) {
-								logger.LogError("transmit queue item {@item} not processed", item);
-							}
-							break;
+								if (!(item is ISystemMessage)) {
+									logger.LogError("transmit queue item {@item} not processed", item);
+								}
+								break;
+						}
 					}
 				} else {
 					logger.LogError("cannot process transmit queue item because the router server is being disposed");

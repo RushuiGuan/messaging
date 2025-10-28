@@ -7,10 +7,9 @@ using System;
 
 namespace Sample.WebApi {
 	public class Startup : Albatross.Hosting.Startup {
-		public override bool Swagger => true;
-		public override bool WebApi => true;
-		public override bool Secured => true;
-		public override bool Spa => false;
+		protected override bool OpenApi => true;
+		protected override bool WebApi => true;
+		protected override bool Spa => false;
 
 
 		public Startup(IConfiguration configuration) : base(configuration) { }

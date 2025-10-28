@@ -16,7 +16,7 @@ namespace Albatross.Messaging.Test {
 			if (parsed) {
 				var expectedTimeStamp = DateTime.ParseExact(expected_timestamp_text, "yyyy-MM-ddTHH:mm:ss.fff", null);
 				expectedTimeStamp = DateTime.SpecifyKind(expectedTimeStamp, DateTimeKind.Utc);
-				Assert.Equal(expectedTimeStamp, replay.TimeStamp);
+				Assert.Equal(expectedTimeStamp, replay?.TimeStamp);
 			}
 		}
 	}

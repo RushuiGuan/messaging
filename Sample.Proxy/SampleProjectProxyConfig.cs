@@ -4,7 +4,7 @@ using System.ComponentModel.DataAnnotations;
 
 namespace Sample.Proxy {
 	public class SampleProjectProxyConfig : ConfigBase {
-		public SampleProjectProxyConfig(IConfiguration configuration) : base(configuration) {
+		public SampleProjectProxyConfig(IConfiguration configuration) : base(configuration, null) {
 			EndPoint = configuration.GetRequiredEndPoint("sample-project")!;
 		}
 

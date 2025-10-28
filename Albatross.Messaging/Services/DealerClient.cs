@@ -95,15 +95,17 @@ namespace Albatross.Messaging.Services {
 			try {
 				if (running) {
 					var item = args.Queue.Dequeue();
-					if (item is IMessage msg) {
-						this.Transmit(msg);
-					} else {
-						foreach (var service in this.transmitServices) {
-							if (service.ProcessQueue(this, item)) {
-								return;
+					if (item != null) {
+						if (item is IMessage msg) {
+							this.Transmit(msg);
+						} else {
+							foreach (var service in this.transmitServices) {
+								if (service.ProcessQueue(this, item)) {
+									return;
+								}
 							}
+							logger.LogError("transmit queue item @{item} not processed", item);
 						}
-						logger.LogError("transmit queue item @{item} not processed", item);
 					}
 				} else {
 					logger.LogError("cannot process transmit queue item because the dealer client is being disposed");

@@ -1,11 +1,8 @@
 ﻿using Albatross.Messaging.Commands.Messages;
 using Albatross.Messaging.EventSource;
 using Albatross.Messaging.Messages;
-using Albatross.Text;
 using System;
 using System.Collections.Generic;
-using System.IO;
-using System.Threading.Tasks;
 
 namespace Albatross.Messaging.Utility {
 	public class Conversation {
@@ -68,36 +65,6 @@ namespace Albatross.Messaging.Utility {
 			} else {
 				throw new ArgumentException();
 			}
-		}
-
-		PrintPropertiesOption BuildPrintOptions() {
-			var fields = new List<string> {
-				nameof(Client),
-				nameof(Type),
-				nameof(Mode),
-				nameof(RequestPayLoad),
-			};
-			if (requestError != null) {
-				fields.Add(nameof(RequestErrorDuration));
-				fields.Add(nameof(RequestErrorMessage));
-			} else {
-				fields.Add(nameof(RequestAckDuration));
-			}
-			if (errorReply != null) {
-				fields.Add(nameof(ReplyErrorMessage));
-				fields.Add(nameof(ReplyErrorDuration));
-				fields.Add(nameof(ReplyErrorAckDuration));
-			} else {
-				fields.Add(nameof(ReplyPayLoad));
-				fields.Add(nameof(ReplyDuration));
-				fields.Add(nameof(ReplyAckDuration));
-			};
-			fields.Add(nameof(Sequence));
-			return new PrintOptionBuilder<PrintPropertiesOption>().Property(fields.ToArray()).Build();
-		}
-
-		public async Task Write(TextWriter writer) {
-			await writer.PrintProperties(this, this.BuildPrintOptions());
 		}
 	}
 }
