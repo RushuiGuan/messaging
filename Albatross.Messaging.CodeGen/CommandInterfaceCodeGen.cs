@@ -92,7 +92,7 @@ namespace Albatross.Messaging.CodeGen {
 						using (codestack.NewScope(new NamespaceDeclarationBuilder(myNamespace))) {
 							using (codestack.NewScope(new ClassDeclarationBuilder(Shared.Class.CodeGenExtensions).Public().Static())) {
 								using (codestack.NewScope(new MethodDeclarationBuilder("IServiceCollection", "RegisterCommands").Public().Static())) {
-									codestack.With(new ParameterNode("IServiceCollection", "services").WithThis());
+									codestack.With(new ParameterNode(new TypeNode("IServiceCollection"), "services").WithThis());
 									codestack.With(new ParameterNode(new GenericIdentifierNode("Func", "ulong", "object", "IServiceProvider", "string"), "getQueueName"));
 									var commandNames = new HashSet<string>();
 									foreach (var item in commandHandlerSetups) {

@@ -1,12 +1,10 @@
-﻿using Albatross.CodeAnalysis.MSBuild;
-using Albatross.CodeAnalysis.Symbols;
+﻿using Albatross.CodeAnalysis.Symbols;
+using Albatross.CodeAnalysis.Testing;
 using Albatross.Messaging.CodeGen;
 using Microsoft.CodeAnalysis;
 using Microsoft.CodeAnalysis.CSharp;
-using System;
 using System.Collections.Generic;
 using System.Linq;
-using System.Text;
 using System.Threading.Tasks;
 using Xunit;
 
@@ -75,9 +73,9 @@ namespace Test1 {
 		[InlineData(@"public partial interface ITestCommand {}", "")]
 		// has implementation but no interface declaration
 		[InlineData(@"public class TestClass1: ITestCommand {} public class TestClass2: ITestCommand {}", "")]
-		public void TestCommandInterfaceAndImplementationSearch(string code, string expected) {
+		public async Task TestCommandInterfaceAndImplementationSearch(string code, string expected) {
 			// Arrange
-			var compilation = code.CreateCompilation();
+			var compilation = await code.CreateNet8CompilationAsync();
 			// Act
 			var result = new List<string>();
 			foreach (var syntaxTree in compilation.SyntaxTrees) {
