@@ -5,9 +5,9 @@
 		<Nullable>enable</Nullable>
 	</PropertyGroup>
 	<ItemGroup>
-		<PackageReference Include="Albatross.Config" Version="9.0.1" />
-		<PackageReference Include="Albatross.Dates" Version="7.5.13" />
-		<PackageReference Include="Albatross.WebClient" Version="8.0.2" />
+		<PackageReference Include="Albatross.Config" Version="7.5.11" />
+		<PackageReference Include="Albatross.Dates" Version="8.0.0" />
+		<PackageReference Include="Albatross.WebClient" Version="8.0.3" />
 		<ProjectReference Include="..\Sample.Core\Sample.Core.csproj" />
 	</ItemGroup>
 </Project>

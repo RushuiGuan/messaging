@@ -1,23 +1,23 @@
 <?xml version="1.0" encoding="utf-8"?>
 <Project Sdk="Microsoft.NET.Sdk">
 	<PropertyGroup>
-		<TargetFramework>net8.0</TargetFramework>
+		<TargetFramework>net10.0</TargetFramework>
 		<Nullable>enable</Nullable>
 		<Description>A durable messaging library built on top of ZeroMQ</Description>
 		<LangVersion>Latest</LangVersion>
 		<PackageProjectUrl>$(RepositoryProjectRoot)/Albatross.Messaging</PackageProjectUrl>
 	</PropertyGroup>
 	<ItemGroup>
-		<PackageReference Include="Albatross.Collections" Version="8.0.0" />
-		<PackageReference Include="Albatross.Config" Version="9.0.1" />
-		<PackageReference Include="Albatross.IO" Version="8.0.1" />
-		<PackageReference Include="Albatross.Math" Version="7.5.8" />
-		<PackageReference Include="Albatross.Reflection" Version="8.0.4" />
-		<PackageReference Include="Albatross.Serialization.Json" Version="9.0.0" />
-		<PackageReference Include="Albatross.Text" Version="8.2.0" />
+		<PackageReference Include="Albatross.Collections" Version="8.0.1" />
+		<PackageReference Include="Albatross.Config" Version="7.5.11" />
+		<PackageReference Include="Albatross.IO" Version="9.0.0" />
+		<PackageReference Include="Albatross.Math" Version="7.5.9" />
+		<PackageReference Include="Albatross.Reflection" Version="8.0.7" />
+		<PackageReference Include="Albatross.Serialization.Json" Version="10.0.0" />
+		<PackageReference Include="Albatross.Text" Version="9.0.1" />
 		<PackageReference Include="Albatross.Threading" Version="7.5.9" />
 		<PackageReference Include="CoenM.Encoding.Z85e" Version="1.2.1" />
-		<PackageReference Include="Microsoft.Extensions.Hosting.Abstractions" Version="9.0.10" />
+		<PackageReference Include="Microsoft.Extensions.Hosting.Abstractions" Version="10.0.1" />
 		<PackageReference Include="NetMQ" Version="4.0.2.2" />
 		<ProjectReference Include="..\Albatross.Messaging.CodeGen\Albatross.Messaging.CodeGen.csproj" />
 		<ProjectReference Include="..\Albatross.Messaging.Core\Albatross.Messaging.Core.csproj" />
