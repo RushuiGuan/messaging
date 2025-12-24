@@ -60,7 +60,9 @@ namespace Albatross.Messaging.CodeGen {
 
 			context.RegisterSourceOutput(aggregated, static (context, tuple) => {
 				var (compilation, pair) = tuple;
-				var typeConverter = new DefaultTypeConverter(compilation);
+				var typeConverter = new DefaultTypeConverter{
+					UseQualifiedNames = true
+				};
 				foreach (var group in pair.GroupBy(x => x.interfaceType, SymbolEqualityComparer.Default)) {
 					var file = new FileDeclaration(group.Key!.Name + ".g") {
 						Namespace = new NamespaceExpression(group.Key.ContainingNamespace.GetFullNamespace()),
