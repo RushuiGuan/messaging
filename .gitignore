@@ -331,3 +331,4 @@ ASALocalRun/
 
 # MFractors (Xamarin productivity tool) working folder 
 .mfractor/
+/Albatross.Messaging.CodeGen/CommandInterfaceCodeGen.cs
