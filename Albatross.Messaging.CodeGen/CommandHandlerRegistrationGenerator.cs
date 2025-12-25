@@ -45,7 +45,26 @@ namespace Albatross.Messaging.CodeGen {
 						typeConverter.Convert(info.ImplementationType),
 					}
 				},
-			}.EndOfStatement();
+			};
+		}
+
+		private static IExpression CreateAddCommandExpression(Compilation compilation, CommandHandlerInfo info, DefaultTypeConverter typeConverter) {
+			var commandType = info.InterfaceType.TypeArguments[0];
+			var commandName = commandType.Name;
+			return new InvocationExpression {
+				CallableExpression = new IdentifierNameExpression("services.AddCommand") {
+					GenericArguments = new() {
+						typeConverter.Convert(commandType),
+					},
+				},
+				Arguments = {
+					new ArrayExpression {
+						Type = Defined.Types.String,
+						Items = { new StringLiteralExpression(commandName) }
+					},
+					new IdentifierNameExpression("getQueueName"),
+				}
+			};
 		}
 
 		public void Initialize(IncrementalGeneratorInitializationContext context) {
@@ -93,11 +112,24 @@ namespace Albatross.Messaging.CodeGen {
 												Type = Defined.Types.IServiceCollection,
 												Name = new IdentifierNameExpression("services"),
 												UseThisKeyword = true,
+											},
+											new ParameterDeclaration {
+												Type = new TypeExpression(new QualifiedIdentifierNameExpression("Func", Defined.Namespaces.System) {
+													GenericArguments = [
+														new TypeExpression("ulong"),
+														Defined.Types.Object,
+														new TypeExpression(new QualifiedIdentifierNameExpression("IServiceProvider", Defined.Namespaces.System)),
+														Defined.Types.String,
+													]
+												}),
+												Name = new IdentifierNameExpression("getQueueName"),
 											}
 										},
-										Body = new CodeBlock {
+										Body = {
 											{
 												true, () => group.Select(x => CreateRegistrationExpression(compilation, x!, typeConverter))
+											}, {
+												true, () => group.Select(x => CreateAddCommandExpression(compilation, x!, typeConverter))
 											},
 											new ReturnExpression {
 												Expression = new IdentifierNameExpression("services")

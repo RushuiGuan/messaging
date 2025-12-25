@@ -7,10 +7,7 @@
 	<ItemGroup>
 		<ProjectReference Include="..\Albatross.Messaging\Albatross.Messaging.csproj" />
 		<ProjectReference Include="..\Sample.Core\Sample.Core.csproj" />
-	</ItemGroup>
-	<ItemGroup>
 		<ProjectReference Include="..\Albatross.Messaging.CodeGen\Albatross.Messaging.CodeGen.csproj">
-			<PrivateAssets>all</PrivateAssets>
 			<ReferenceOutputAssembly>false</ReferenceOutputAssembly>
 			<OutputItemType>Analyzer</OutputItemType>
 		</ProjectReference>

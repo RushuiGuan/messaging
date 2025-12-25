@@ -20,47 +20,47 @@ namespace Albatross.Messaging.CodeGen {
 
 			// looking for partial interfaces that end with "Command"
 			var interfaces = context.SyntaxProvider.CreateSyntaxProvider(
-				predicate: static (node, _) => node is InterfaceDeclarationSyntax syntax,
-				transform: static (ctx, _) => {
-					var interfaceDeclaration = (InterfaceDeclarationSyntax)ctx.Node;
-					var model = ctx.SemanticModel;
-					var interfaceType =	model.GetDeclaredSymbol(interfaceDeclaration);
-					if (interfaceType != null && interfaceType.IsPartial()) {
-						if (interfaceType.Name.EndsWith("Command", StringComparison.Ordinal) && interfaceType.GetMembers().Length == 0) {
-							return interfaceType;
-						} else if (interfaceType.HasAttribute(model.Compilation.CommandInterfaceAttribute())) {
-							return interfaceType;
+					predicate: static (node, _) => node is InterfaceDeclarationSyntax syntax,
+					transform: static (ctx, _) => {
+						var interfaceDeclaration = (InterfaceDeclarationSyntax)ctx.Node;
+						var model = ctx.SemanticModel;
+						var interfaceType = model.GetDeclaredSymbol(interfaceDeclaration);
+						if (interfaceType != null && interfaceType.IsPartial()) {
+							if (interfaceType.Name.EndsWith("Command", StringComparison.Ordinal) && interfaceType.GetMembers().Length == 0) {
+								return interfaceType;
+							} else if (interfaceType.HasAttribute(model.Compilation.CommandInterfaceAttribute())) {
+								return interfaceType;
+							}
 						}
+						return null;
 					}
-					return null;
-				}
-			).Where(x => x != null)
-			.WithComparer(SymbolEqualityComparer.Default);
+				).Where(x => x != null)
+				.WithComparer(SymbolEqualityComparer.Default);
 
 			var classes = context.SyntaxProvider.CreateSyntaxProvider(
-				predicate: static (node, _) => node is ClassDeclarationSyntax or RecordDeclarationSyntax,
-				transform: static (ctx, _) => {
-					var model = ctx.SemanticModel;
-					return model.GetDeclaredSymbol((BaseTypeDeclarationSyntax)ctx.Node);
-				}
-			).Where(static x => x != null)
-			.WithComparer(SymbolEqualityComparer.Default)
-			.Combine(interfaces.Collect()).Select(static (tuple, _) => {
-				var (classType, interfaceTypeSet) = tuple;
-				var list = new List<(INamedTypeSymbol classType, INamedTypeSymbol interfaceType)>();
-				foreach (var interfaceType in interfaceTypeSet) {
-					if (classType.IsConcreteClass() && classType!.AllInterfaces.Contains(interfaceType!, SymbolEqualityComparer.Default)) {
-						list.Add((classType!, interfaceType!));
+					predicate: static (node, _) => node is ClassDeclarationSyntax or RecordDeclarationSyntax,
+					transform: static (ctx, _) => {
+						var model = ctx.SemanticModel;
+						return model.GetDeclaredSymbol((BaseTypeDeclarationSyntax)ctx.Node);
 					}
-				}
-				return list;
-			}).SelectMany(static (x, _) => x);
+				).Where(static x => x != null)
+				.WithComparer(SymbolEqualityComparer.Default)
+				.Combine(interfaces.Collect()).Select(static (tuple, _) => {
+					var (classType, interfaceTypeSet) = tuple;
+					var list = new List<(INamedTypeSymbol classType, INamedTypeSymbol interfaceType)>();
+					foreach (var interfaceType in interfaceTypeSet) {
+						if (classType.IsConcreteClass() && classType!.AllInterfaces.Contains(interfaceType!, SymbolEqualityComparer.Default)) {
+							list.Add((classType!, interfaceType!));
+						}
+					}
+					return list;
+				}).SelectMany(static (x, _) => x);
 
 			var aggregated = compilationProvider.Combine(classes.Collect());
 
 			context.RegisterSourceOutput(aggregated, static (context, tuple) => {
 				var (compilation, pair) = tuple;
-				var typeConverter = new DefaultTypeConverter{
+				var typeConverter = new DefaultTypeConverter {
 					UseQualifiedNames = true
 				};
 				foreach (var group in pair.GroupBy(x => x.interfaceType, SymbolEqualityComparer.Default)) {
@@ -72,13 +72,13 @@ namespace Albatross.Messaging.CodeGen {
 								AccessModifier = Defined.Keywords.Public,
 								Attributes = group.Select(x => new AttributeExpression {
 									CallableExpression = MyDefined.Identifiers.JsonDerivedType,
-									Arguments = new (
+									Arguments = {
 										new InvocationExpression {
 											CallableExpression = MyDefined.Identifiers.TypeOf,
-											Arguments = new (typeConverter.Convert(x.classType))
+											Arguments = { typeConverter.Convert(x.classType) }
 										},
 										new StringLiteralExpression(x.classType.Name)
-									)
+									}
 								})
 							}
 						]
