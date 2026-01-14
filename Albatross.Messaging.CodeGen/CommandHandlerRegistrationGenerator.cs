@@ -50,12 +50,11 @@ namespace Albatross.Messaging.CodeGen {
 		}
 
 		private static IExpression CreateAddCommandExpression(Compilation compilation, CommandHandlerInfo info, DefaultTypeConverter typeConverter) {
-			var commandType = info.InterfaceType.TypeArguments[0];
-			var commandName = commandType.Name;
+			var commandName = info.CommandType.GetFullName();
 			return new InvocationExpression {
 				CallableExpression = new IdentifierNameExpression("services.AddCommand") {
 					GenericArguments = new() {
-						typeConverter.Convert(commandType),
+						typeConverter.Convert(info.CommandType),
 						{  info.ResponseType != null, ()=> typeConverter.Convert(info.ResponseType!) }
 					},
 				},
