@@ -8,12 +8,12 @@ using System.Linq;
 
 namespace Albatross.Messaging.Utility {
 	public static class Extensions {
-		public static IEnumerable<FileInfo> GetEventSourceFiles(this MessagingGlobalOptions options) {
+		public static IEnumerable<FileInfo> GetEventSourceFiles(this MessagingGlobalParams parameters) {
 			string folder;
-			if (string.IsNullOrEmpty(options.EventSourceFolder)) {
-				folder = System.IO.Path.Combine(Environment.GetFolderPath(Environment.SpecialFolder.CommonApplicationData), options.Application);
+			if (string.IsNullOrEmpty(parameters.EventSourceFolder)) {
+				folder = System.IO.Path.Combine(Environment.GetFolderPath(Environment.SpecialFolder.CommonApplicationData), parameters.Application);
 			} else {
-				folder = options.EventSourceFolder;
+				folder = parameters.EventSourceFolder;
 			}
 			var directory = new DirectoryInfo(folder);
 			if (!directory.Exists) {

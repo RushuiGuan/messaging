@@ -1,8 +1,17 @@
-# Packages
+# packages
 Albatross.Messaging.Core
 Albatross.Messaging
 Albatross.Messaging.CodeGen
 Albatross.Messaging.Utility
 
-#Testing
+# tests
 Albatross.Messaging.Test
+
+
+# apps
+Albatross.Messaging.Utility
+Sample.Utility
+
+# services
+Sample.Daemon
+Sample.WebApi

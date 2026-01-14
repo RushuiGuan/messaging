@@ -4,7 +4,6 @@
 		<OutputType>Exe</OutputType>
 		<TargetFramework>net10.0</TargetFramework>
 		<Nullable>enable</Nullable>
-		<AssemblyName>msg</AssemblyName>
 		<PackageId>Albatross.Messaging.Utility</PackageId>
 		<PackAsTool>True</PackAsTool>
 		<ToolCommandName>msg</ToolCommandName>
@@ -12,7 +11,9 @@
 	</PropertyGroup>
 	<ItemGroup>
 		<PackageReference Include="Albatross.CommandLine" Version="8.0.2" />
+		<PackageReference Include="Albatross.CommandLine.Defaults" Version="8.0.2" />
 		<PackageReference Include="Albatross.Text.CliFormat" Version="9.0.3" />
+		<PackageReference Include="System.CommandLine" Version="2.0.1" />
 		<ProjectReference Include="..\Albatross.Messaging\Albatross.Messaging.csproj" />
 	</ItemGroup>
 	<ItemGroup>

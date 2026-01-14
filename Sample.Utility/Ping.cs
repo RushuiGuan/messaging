@@ -1,19 +1,19 @@
-﻿using Albatross.CommandLine;
+﻿using Albatross.CommandLine.Annotations;
 using Microsoft.Extensions.Logging;
-using Microsoft.Extensions.Options;
 using Sample.Proxy;
-using System.CommandLine.Invocation;
+using System.CommandLine;
+using System.Threading;
 using System.Threading.Tasks;
 
 namespace Sample.Utility {
-	[Verb("ping", typeof(Ping))]
-	public class PingOptions { }
+	[Verb<Ping>("ping")]
+	public class PingParams { }
 
-	public class Ping : MyBaseHandler<PingOptions> {
-		public Ping(CommandProxyService commandProxy, IOptions<PingOptions> options, ILogger logger) : base(commandProxy, options, logger) {
+	public class Ping : MyBaseHandler<PingParams> {
+		public Ping(ParseResult result, CommandProxyService commandProxy, PingParams parameters, ILogger<Ping> logger) : base(result, commandProxy, parameters, logger) {
 		}
 
-		public override async Task<int> InvokeAsync(InvocationContext context) {
+		public override async Task<int> InvokeAsync(CancellationToken cancellationToken) {
 			await commandProxy.SubmitAppCommand(new Core.Commands.PingCommand(1));
 			return 0;
 		}

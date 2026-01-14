@@ -1,37 +1,37 @@
 ﻿using Albatross.CommandLine;
-using Microsoft.Extensions.Options;
+using Albatross.CommandLine.Annotations;
 using Sample.Core.Commands;
 using Sample.Proxy;
 using System.CommandLine;
-using System.CommandLine.Invocation;
+using System.Threading;
 using System.Threading.Tasks;
 
 namespace Sample.Utility {
-	[Verb("my-cmd1", typeof(RunMyCommand1))]
-	public class RunMyCommand1Option : MyBaseOption {
+	[Verb<RunMyCommand1>("my-cmd1")]
+	public class RunMyCommand1Params : MyBaseParams {
 		[Option("d")]
-		public int Delay { get; set; }
+		public int Delay { get; init; }
 
 		[Option("t")]
-		public string? Text { get; set; }
+		public string? Text { get; init; }
 
 		[Option("e")]
-		public bool Error { get; set; }
+		public bool Error { get; init; }
 
 		[Option("child-count")]
-		public int ChildCount { get; set; }
+		public int ChildCount { get; init; }
 	}
-	public class RunMyCommand1 : BaseHandler<RunMyCommand1Option> {
+	public class RunMyCommand1 : BaseHandler<RunMyCommand1Params> {
 		private readonly CommandProxyService client;
 
-		public RunMyCommand1(CommandProxyService client, IOptions<RunMyCommand1Option> options) : base(options) {
+		public RunMyCommand1(ParseResult result, CommandProxyService client, RunMyCommand1Params parameters) : base(result, parameters) {
 			this.client = client;
 		}
-		public override async Task<int> InvokeAsync(InvocationContext context) {
-			for (int i = 0; i < options.Count; i++) {
+		public override async Task<int> InvokeAsync(CancellationToken cancellationToken) {
+			for (int i = 0; i < parameters.Count; i++) {
 				var cmd = new MyCommand1($"test command {i}") {
-					Error = options.Error,
-					Delay = options.Delay,
+					Error = parameters.Error,
+					Delay = parameters.Delay,
 				};
 				await client.SubmitSystemCommand(cmd);
 			}

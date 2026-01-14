@@ -1,42 +1,41 @@
 ﻿using Albatross.CommandLine;
+using Albatross.CommandLine.Annotations;
 using Albatross.Messaging.EventSource;
 using Albatross.Messaging.Messages;
 using Albatross.Text.CliFormat;
-using Microsoft.Extensions.Options;
 using System;
-using System.CommandLine.Invocation;
+using System.CommandLine;
 using System.IO;
+using System.Threading;
 using System.Threading.Tasks;
 
 namespace Albatross.Messaging.Utility {
-	[Verb("seek", typeof(Seek), Description = "Search the event source files for a conversation with the specified id")]
-	public class Seekoptions {
+	[Verb<Seek>("seek", Description = "Search the event source files for a conversation with the specified id")]
+	public record class SeekParams : MessagingGlobalParams {
 		[Option("i", "id")]
-		public ulong? Id { get; set; }
+		public ulong? Id { get; init; }
 
 		[Option("s", Description = "The local time to start searching for the events")]
-		public DateTime? Start { get; set; }
+		public DateTime? Start { get; init; }
 
 		[Option("e", Description = "The local time to stop searching for the events")]
-		public DateTime? End { get; set; }
+		public DateTime? End { get; init; }
 
 		[Option("p", "pattern", Description = "Regular expression pattern that can be used as a filter on the message class name")]
-		public string? MessageClassNameFilterPattern { get; set; }
+		public string? MessageClassNameFilterPattern { get; init; }
 	}
-	public class Seek : BaseHandler<Seekoptions> {
+	public class Seek : BaseHandler<SeekParams> {
 		private readonly IMessageFactory messageFactory;
-		private readonly MessagingGlobalOptions messagingOptions;
 
-		public Seek(IMessageFactory messageFactory, IOptions<MessagingGlobalOptions> messagingOptions, IOptions<Seekoptions> options) : base(options) {
+		public Seek(ParseResult result, IMessageFactory messageFactory, SeekParams parameters) : base(result, parameters) {
 			this.messageFactory = messageFactory;
-			this.messagingOptions = messagingOptions.Value;
 		}
 
-		public override async Task<int> InvokeAsync(InvocationContext context) {
+		public override async Task<int> InvokeAsync(CancellationToken cancellationToken) {
 			Conversation? conversation = null;
-			foreach (var file in messagingOptions.GetEventSourceFiles()) {
-				this.writer.WriteLine($"Searching file {file}");
-				conversation = await SearchFile(conversation, file, messageFactory);
+			foreach (var file in parameters.GetEventSourceFiles()) {
+				Writer.WriteLine($"Searching file {file}");
+				conversation = await SearchFile(conversation, file, messageFactory, cancellationToken);
 			}
 			if (conversation != null) {
 				Console.Out.CliPrint(conversation, null);
@@ -44,14 +43,14 @@ namespace Albatross.Messaging.Utility {
 			return 0;
 		}
 
-		async Task<Conversation?> SearchFile(Conversation? message, FileInfo file, IMessageFactory messageFactory) {
+		async Task<Conversation?> SearchFile(Conversation? message, FileInfo file, IMessageFactory messageFactory, CancellationToken cancellationToken) {
 			using var stream = File.Open(file.FullName, FileMode.Open, FileAccess.Read, FileShare.ReadWrite);
 			using (var reader = new StreamReader(stream)) {
 				while (!reader.EndOfStream) {
-					var line = await reader.ReadLineAsync();
+					var line = await reader.ReadLineAsync(cancellationToken);
 					if (line != null) {
 						if (EventEntry.TryParseLine(messageFactory, line, out var entry)) {
-							if (options.Id == entry.Message.Id) {
+							if (parameters.Id == entry.Message.Id) {
 								if (message == null) {
 									message = new Conversation(entry.Message.Route ?? string.Empty, entry.Message.Id);
 								}

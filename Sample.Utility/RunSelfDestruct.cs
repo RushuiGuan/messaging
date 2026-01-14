@@ -1,23 +1,23 @@
-﻿using Albatross.CommandLine;
+﻿using Albatross.CommandLine.Annotations;
 using Microsoft.Extensions.Logging;
-using Microsoft.Extensions.Options;
 using Sample.Core.Commands;
 using Sample.Proxy;
-using System.CommandLine.Invocation;
+using System.CommandLine;
+using System.Threading;
 using System.Threading.Tasks;
 
 namespace Sample.Utility {
-	[Verb("self-destruct", typeof(RunSelfDestruct))]
-	public class RunSelfDestructOption {
+	[Verb<RunSelfDestruct>("self-destruct")]
+	public class RunSelfDestructParams {
 		[Option("d")]
-		public int? Delay { get; set; }
+		public int? Delay { get; init; }
 	}
-	public class RunSelfDestruct : MyBaseHandler<RunSelfDestructOption> {
-		public RunSelfDestruct(CommandProxyService commandProxy, IOptions<RunSelfDestructOption> options, ILogger logger) : base(commandProxy, options, logger) {
+	public class RunSelfDestruct : MyBaseHandler<RunSelfDestructParams> {
+		public RunSelfDestruct(ParseResult result, CommandProxyService commandProxy, RunSelfDestructParams parameters, ILogger<RunSelfDestruct> logger) : base(result, commandProxy, parameters, logger) {
 		}
-		public override async Task<int> InvokeAsync(InvocationContext context) {
+		public override async Task<int> InvokeAsync(CancellationToken cancellationToken) {
 			var cmd = new SelfDestructCommand() {
-				Delay = options.Delay,
+				Delay = parameters.Delay,
 			};
 			await commandProxy.SubmitSystemCommand(cmd);
 			return 0;

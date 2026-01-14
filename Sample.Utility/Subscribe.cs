@@ -1,30 +1,31 @@
 ﻿using Albatross.CommandLine;
-using Microsoft.Extensions.Options;
+using Albatross.CommandLine.Annotations;
 using Sample.Proxy;
-using System.CommandLine.Invocation;
+using System.CommandLine;
+using System.Threading;
 using System.Threading.Tasks;
 
 namespace Sample.Utility {
 
-	[Verb("sub", typeof(Subscribe))]
-	public class SubscribeOption {
+	[Verb<Subscribe>("sub")]
+	public class SubscribeParams {
 		[Option("o")]
-		public bool On { get; set; }
+		public bool On { get; init; }
 
 		[Option("t")]
-		public string Topic { get; set; } = string.Empty;
+		public string Topic { get; init; } = string.Empty;
 	}
-	public class Subscribe : BaseHandler<SubscribeOption> {
+	public class Subscribe : BaseHandler<SubscribeParams> {
 		private readonly RunProxyService svc;
 
-		public Subscribe(RunProxyService svc, IOptions<SubscribeOption> options) : base(options) {
+		public Subscribe(ParseResult result, RunProxyService svc, SubscribeParams parameters) : base(result, parameters) {
 			this.svc = svc;
 		}
-		public override async Task<int> InvokeAsync(InvocationContext context) {
-			if (options.On) {
-				await svc.Subscribe(options.Topic);
+		public override async Task<int> InvokeAsync(CancellationToken cancellationToken) {
+			if (parameters.On) {
+				await svc.Subscribe(parameters.Topic);
 			} else {
-				await svc.Unsubscribe(options.Topic);
+				await svc.Unsubscribe(parameters.Topic);
 			}
 			return 0;
 		}

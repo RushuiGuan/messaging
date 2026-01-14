@@ -1,20 +1,21 @@
 ﻿using Albatross.CommandLine;
-using Microsoft.Extensions.Options;
+using Albatross.CommandLine.Annotations;
 using Sample.Proxy;
-using System.CommandLine.Invocation;
+using System.CommandLine;
+using System.Threading;
 using System.Threading.Tasks;
 
 namespace Sample.Utility {
 
-	[Verb("unsub-all", typeof(UnsubscribeAll))]
-	public class UnsubscribeAllOption { }
-	public class UnsubscribeAll : BaseHandler<UnsubscribeAllOption> {
+	[Verb<UnsubscribeAll>("unsub-all")]
+	public class UnsubscribeAllParams { }
+	public class UnsubscribeAll : BaseHandler<UnsubscribeAllParams> {
 		private readonly RunProxyService svc;
 
-		public UnsubscribeAll(RunProxyService svc, IOptions<UnsubscribeAllOption> options) : base(options) {
+		public UnsubscribeAll(ParseResult result, RunProxyService svc, UnsubscribeAllParams parameters) : base(result, parameters) {
 			this.svc = svc;
 		}
-		public override async Task<int> InvokeAsync(InvocationContext context) {
+		public override async Task<int> InvokeAsync(CancellationToken cancellationToken) {
 			await svc.UnsubscribeAll();
 			return 0;
 		}

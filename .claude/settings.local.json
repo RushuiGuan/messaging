@@ -1,0 +1,10 @@
+{
+  "permissions": {
+    "allow": [
+      "WebFetch(domain:rushuiguan.github.io)",
+      "Bash(dotnet build:*)",
+      "Bash(./msg.exe:*)",
+      "Bash(./sample.exe:*)"
+    ]
+  }
+}

@@ -1,20 +1,21 @@
 ﻿using Albatross.CommandLine;
-using Microsoft.Extensions.Options;
+using Albatross.CommandLine.Annotations;
 using NetMQ;
-using System.CommandLine.Invocation;
+using System.CommandLine;
+using System.Threading;
 using System.Threading.Tasks;
 
 namespace Albatross.Messaging.Utility {
-	[Verb("generate-encryption-keys", typeof(GenerateEncryptionKeys))]
-	public class GenerateEncryptionKeysOptions {
+	[Verb<GenerateEncryptionKeys>("generate-encryption-keys")]
+	public class GenerateEncryptionKeysParams {
 	}
-	public class GenerateEncryptionKeys : BaseHandler<GenerateEncryptionKeysOptions> {
-		public GenerateEncryptionKeys(IOptions<GenerateEncryptionKeysOptions> options) : base(options) {
+	public class GenerateEncryptionKeys : BaseHandler<GenerateEncryptionKeysParams> {
+		public GenerateEncryptionKeys(ParseResult result, GenerateEncryptionKeysParams parameters) : base(result, parameters) {
 		}
-		public override async Task<int> InvokeAsync(InvocationContext context) {
+		public override async Task<int> InvokeAsync(CancellationToken cancellationToken) {
 			var pair = new NetMQCertificate();
-			await writer.WriteLineAsync($"Public key:{pair.PublicKeyZ85}");
-			await writer.WriteLineAsync($"Private key:{pair.SecretKeyZ85}");
+			await Writer.WriteLineAsync($"Public key:{pair.PublicKeyZ85}");
+			await Writer.WriteLineAsync($"Private key:{pair.SecretKeyZ85}");
 			return 0;
 		}
 	}

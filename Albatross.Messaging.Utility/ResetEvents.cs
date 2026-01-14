@@ -1,32 +1,33 @@
 ﻿using Albatross.CommandLine;
+using Albatross.CommandLine.Annotations;
 using Microsoft.Extensions.Logging;
-using Microsoft.Extensions.Options;
 using System;
-using System.CommandLine.Invocation;
+using System.CommandLine;
 using System.IO;
+using System.Threading;
 using System.Threading.Tasks;
 
 namespace Albatross.Messaging.Utility {
-	[Verb("reset-events", typeof(ResetEvents))]
-	public class ResetEventsOptions {
+	[Verb<ResetEvents>("reset-events")]
+	public class ResetEventsParams {
 		[Option("p")]
-		public string Project { get; set; } = string.Empty;
+		public required string Project { get; init; }
 
 		[Option("l")]
-		public string? ProjectLocation { get; set; }
+		public string? ProjectLocation { get; init; }
 	}
-	public class ResetEvents : BaseHandler<ResetEventsOptions> {
+	public class ResetEvents : BaseHandler<ResetEventsParams> {
 		private readonly ILogger<ResetEvents> logger;
 
-		public ResetEvents(IOptions<ResetEventsOptions> options, ILogger<ResetEvents> logger) : base(options) {
+		public ResetEvents(ParseResult result, ResetEventsParams parameters, ILogger<ResetEvents> logger) : base(result, parameters) {
 			this.logger = logger;
 		}
-		public override Task<int> InvokeAsync(InvocationContext context) {
+		public override Task<int> InvokeAsync(CancellationToken cancellationToken) {
 			string folder;
-			if (string.IsNullOrEmpty(options.ProjectLocation)) {
-				folder = System.IO.Path.Combine(Environment.GetFolderPath(Environment.SpecialFolder.CommonApplicationData), options.Project);
+			if (string.IsNullOrEmpty(parameters.ProjectLocation)) {
+				folder = System.IO.Path.Combine(Environment.GetFolderPath(Environment.SpecialFolder.CommonApplicationData), parameters.Project);
 			} else {
-				folder = System.IO.Path.Combine(options.ProjectLocation, options.Project);
+				folder = System.IO.Path.Combine(parameters.ProjectLocation, parameters.Project);
 			}
 			foreach (var file in Directory.GetFiles(folder, "*.log")) {
 				logger.LogInformation("Deleting log file: {file}", file);

@@ -1,23 +1,24 @@
 ﻿using Albatross.CommandLine;
-using Microsoft.Extensions.Options;
+using Albatross.CommandLine.Annotations;
 using Sample.Proxy;
-using System.CommandLine.Invocation;
+using System.CommandLine;
+using System.Threading;
 using System.Threading.Tasks;
 
 namespace Sample.Utility {
-	[Verb("command-serialization-error-test", typeof(RunCommandSerializationErrorTestHandler))]
-	public class RunCommandSerializationErrorTestOptions {
+	[Verb<RunCommandSerializationErrorTestHandler>("command-serialization-error-test")]
+	public class RunCommandSerializationErrorTestParams {
 		[Option("c")]
-		public bool Callback { get; set; }
+		public bool Callback { get; init; }
 	}
-	public class RunCommandSerializationErrorTestHandler : BaseHandler<RunCommandSerializationErrorTestOptions> {
+	public class RunCommandSerializationErrorTestHandler : BaseHandler<RunCommandSerializationErrorTestParams> {
 		private readonly CommandProxyService client;
 
-		public RunCommandSerializationErrorTestHandler(CommandProxyService client, IOptions<RunCommandSerializationErrorTestOptions> options) : base(options) {
+		public RunCommandSerializationErrorTestHandler(ParseResult result, CommandProxyService client, RunCommandSerializationErrorTestParams parameters) : base(result, parameters) {
 			this.client = client;
 		}
-		public override async Task<int> InvokeAsync(InvocationContext context) {
-			await client.CommandSerializationErrorTest(options.Callback);
+		public override async Task<int> InvokeAsync(CancellationToken cancellationToken) {
+			await client.CommandSerializationErrorTest(parameters.Callback);
 			return 0;
 		}
 	}

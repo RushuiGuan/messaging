@@ -1,26 +1,26 @@
-﻿using Albatross.CommandLine;
+﻿using Albatross.CommandLine.Annotations;
 using Microsoft.Extensions.Logging;
-using Microsoft.Extensions.Options;
 using Sample.Core.Commands;
 using Sample.Proxy;
-using System.CommandLine.Invocation;
+using System.CommandLine;
+using System.Threading;
 using System.Threading.Tasks;
 
 namespace Sample.Utility {
-	[Verb("command-handler-exception-test", typeof(RunCommandHandlerExceptionTest))]
-	public class RunCommandHandlerExceptionTestOptions {
+	[Verb<RunCommandHandlerExceptionTest>("command-handler-exception-test")]
+	public class RunCommandHandlerExceptionTestParams {
 		[Option("d")]
-		public int? Delay { get; set; }
+		public int? Delay { get; init; }
 		[Option("c")]
-		public bool Callback { get; set; }
+		public bool Callback { get; init; }
 	}
-	public class RunCommandHandlerExceptionTest : MyBaseHandler<RunCommandHandlerExceptionTestOptions> {
-		public RunCommandHandlerExceptionTest(CommandProxyService commandProxy, IOptions<RunCommandHandlerExceptionTestOptions> options, ILogger logger) : base(commandProxy, options, logger) {
+	public class RunCommandHandlerExceptionTest : MyBaseHandler<RunCommandHandlerExceptionTestParams> {
+		public RunCommandHandlerExceptionTest(ParseResult result, CommandProxyService commandProxy, RunCommandHandlerExceptionTestParams parameters, ILogger<RunCommandHandlerExceptionTest> logger) : base(result, commandProxy, parameters, logger) {
 		}
-		public override async Task<int> InvokeAsync(InvocationContext context) {
+		public override async Task<int> InvokeAsync(CancellationToken cancellationToken) {
 			var cmd = new CommandHandlerExceptionTestCommand {
-				Delay = options.Delay ?? 0,
-				Callback = options.Callback,
+				Delay = parameters.Delay ?? 0,
+				Callback = parameters.Callback,
 			};
 			await this.commandProxy.SubmitSystemCommand(cmd);
 			return 0;
