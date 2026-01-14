@@ -14,7 +14,7 @@ using System.Linq;
 
 namespace Albatross.Messaging.CodeGen {
 	[Generator]
-	public class CommandLineCodeGenerator : IIncrementalGenerator {
+	public class CommandInterfaceCodeGenerator : IIncrementalGenerator {
 		public void Initialize(IncrementalGeneratorInitializationContext context) {
 			var compilationProvider = context.CompilationProvider.Select(static (x, _) => x);
 

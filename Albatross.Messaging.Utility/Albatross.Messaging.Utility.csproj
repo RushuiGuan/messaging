@@ -11,8 +11,8 @@
 		<PackageProjectUrl>$(RepositoryProjectRoot)/Albatross.Messaging.Utility</PackageProjectUrl>
 	</PropertyGroup>
 	<ItemGroup>
-		<PackageReference Include="Albatross.CommandLine" Version="8.0.0" />
-		<PackageReference Include="Albatross.Text.CliFormat" Version="9.0.1" />
+		<PackageReference Include="Albatross.CommandLine" Version="8.0.2" />
+		<PackageReference Include="Albatross.Text.CliFormat" Version="9.0.3" />
 		<ProjectReference Include="..\Albatross.Messaging\Albatross.Messaging.csproj" />
 	</ItemGroup>
 	<ItemGroup>

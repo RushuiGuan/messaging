@@ -18,6 +18,11 @@
 	</ItemGroup>
 	<ItemGroup>
 		<PackageReference Include="Albatross.Hosting" Version="10.0.0" />
+		<ProjectReference Include="..\Albatross.Messaging.CodeGen\Albatross.Messaging.CodeGen.csproj">
+			<PrivateAssets>all</PrivateAssets>
+			<ReferenceOutputAssembly>false</ReferenceOutputAssembly>
+			<OutputItemType>Analyzer</OutputItemType>
+		</ProjectReference>
 		<ProjectReference Include="..\Albatross.Messaging.Core\Albatross.Messaging.Core.csproj" />
 		<ProjectReference Include="..\Sample\Sample.csproj" />
 	</ItemGroup>
