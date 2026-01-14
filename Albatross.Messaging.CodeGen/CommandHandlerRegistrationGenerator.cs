@@ -7,7 +7,6 @@ using Albatross.CodeGen.CSharp.TypeConversions;
 using Microsoft.CodeAnalysis;
 using Microsoft.CodeAnalysis.CSharp;
 using Microsoft.CodeAnalysis.CSharp.Syntax;
-using System;
 using System.Linq;
 
 namespace Albatross.Messaging.CodeGen {
@@ -29,6 +28,8 @@ namespace Albatross.Messaging.CodeGen {
 		class CommandHandlerInfo {
 			public INamedTypeSymbol InterfaceType { get; }
 			public INamedTypeSymbol ImplementationType { get; }
+			public required INamedTypeSymbol CommandType { get; init; }
+			public INamedTypeSymbol? ResponseType { get; init; }
 
 			public CommandHandlerInfo(INamedTypeSymbol interfaceType, INamedTypeSymbol implementationType) {
 				InterfaceType = interfaceType;
@@ -55,6 +56,7 @@ namespace Albatross.Messaging.CodeGen {
 				CallableExpression = new IdentifierNameExpression("services.AddCommand") {
 					GenericArguments = new() {
 						typeConverter.Convert(commandType),
+						{  info.ResponseType != null, ()=> typeConverter.Convert(info.ResponseType!) }
 					},
 				},
 				Arguments = {
@@ -78,8 +80,11 @@ namespace Albatross.Messaging.CodeGen {
 						foreach (var interfaceType in symbol.AllInterfaces) {
 							if (interfaceType.IsGenericType) {
 								if (interfaceType.OriginalDefinition.Is(model.Compilation.ICommandHandlerGenericDefinition1()) ||
-								    interfaceType.OriginalDefinition.Is(model.Compilation.ICommandHandlerGenericDefinition2())) {
-									return new CommandHandlerInfo(interfaceType, symbol);
+									interfaceType.OriginalDefinition.Is(model.Compilation.ICommandHandlerGenericDefinition2())) {
+									return new CommandHandlerInfo(interfaceType, symbol) {
+										CommandType = (INamedTypeSymbol)interfaceType.TypeArguments[0],
+										ResponseType = interfaceType.TypeArguments.Length == 2 ? (INamedTypeSymbol)interfaceType.TypeArguments[1] : null,
+									};
 								}
 							}
 						}
