@@ -24,7 +24,6 @@
 			<ReferenceOutputAssembly>false</ReferenceOutputAssembly>
 			<OutputItemType>Analyzer</OutputItemType>
 		</ProjectReference>
-		
 	</ItemGroup>
 	<ItemGroup>
 		<None Include="..\icon.png">
