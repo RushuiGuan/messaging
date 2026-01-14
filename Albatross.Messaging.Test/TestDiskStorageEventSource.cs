@@ -62,6 +62,7 @@ namespace Albatross.Messaging.Test {
 					await Task.Delay(100);
 				}
 			}
+			await Task.Delay(1000);
 			Assert.Equal(expectedFileCount, Directory.GetFiles(folder).Length);
 		}
 
@@ -74,8 +75,7 @@ namespace Albatross.Messaging.Test {
 		[InlineData(1000, 100, 99)]
 		[InlineData(1000, 100, 98)]
 		public async Task TestReadOverMultipleFiles(int maxFileSize, int messageCount, int readMarkerIndex) {
-			var folder = $"c:\\temp\\{nameof(TestReadOverMultipleFiles)}_{maxFileSize}_{messageCount}_{readMarkerIndex}";
-			CleanFolder(folder);
+			var folder = $"c:\\temp\\{nameof(TestReadOverMultipleFiles)}_{maxFileSize}_{messageCount}_{readMarkerIndex}\\{Guid.NewGuid()}";
 			var config = new DiskStorageConfiguration(folder, "test-output") {
 				MaxFileSize = maxFileSize,
 			};
