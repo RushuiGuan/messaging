@@ -1,0 +1,25 @@
+<Solution>
+  <Folder Name="/Solution Items/">
+    <File Path=".editorconfig" />
+    <File Path=".gitattributes" />
+    <File Path=".gitignore" />
+    <File Path=".projects" />
+    <File Path="alias.ps1" />
+    <File Path="Directory.Build.props" />
+    <File Path="icon.png" />
+    <File Path="LICENSE" />
+    <File Path="README.md" />
+  </Folder>
+  <Project Path="Albatross.Messaging.CodeGen/Albatross.Messaging.CodeGen.csproj" />
+  <Project Path="Albatross.Messaging.Core/Albatross.Messaging.Core.csproj" />
+  <Project Path="Albatross.Messaging.Test/Albatross.Messaging.Test.csproj" />
+  <Project Path="Albatross.Messaging.Utility/Albatross.Messaging.Utility.csproj" />
+  <Project Path="Albatross.Messaging/Albatross.Messaging.csproj" />
+  <Project Path="Sample.Core/Sample.Core.csproj" />
+  <Project Path="Sample.Daemon/Sample.Daemon.csproj" />
+  <Project Path="Sample.Proxy/Sample.Proxy.csproj" />
+  <Project Path="Sample.Utility/Sample.Utility.csproj" />
+  <Project Path="Sample.WebApi/Sample.WebApi.csproj" />
+  <Project Path="Sample/Sample.csproj" />
+  <Project Path="ThirdParty/ThirdParty.csproj" />
+</Solution>
