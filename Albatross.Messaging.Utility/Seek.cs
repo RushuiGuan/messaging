@@ -2,7 +2,6 @@
 using Albatross.CommandLine.Annotations;
 using Albatross.Messaging.EventSource;
 using Albatross.Messaging.Messages;
-using Albatross.Text.CliFormat;
 using System;
 using System.CommandLine;
 using System.IO;

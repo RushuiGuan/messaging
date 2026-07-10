@@ -1,0 +1,55 @@
+<Project>
+	<!--
+	    Single source of truth for the CodeGen analyzer payload (the generator DLL + the deps it needs
+	    co-located under analyzers/dotnet/cs to load in the consumer's Roslyn).
+	    Imported by BOTH:
+	      - Albatross.Messaging.CodeGen.csproj  (compiles against these deps)
+	      - Albatross.Messaging.csproj          (bundles the same payload so package consumers get the
+	                                             generator automatically, without a separate reference)
+
+	    BundleCodeGenPayloadOnly=true (set by Albatross.Messaging) excludes the deps from that project's
+	    compile/runtime via ExcludeAssets - it only wants the restored $(Pkg*) paths, not the
+	    assemblies (pulling Albatross.CodeAnalysis.Polyfill into a net10 compile collides with the BCL's
+	    NotNullWhenAttribute -> CS0433, and we don't want them as runtime deps either).
+
+	    Static <None Pack> items are sufficient here because both importers are SINGLE-target: $(Pkg*)
+	    from GeneratePathProperty resolves during pack. (A MULTI-targeted importer would need a
+	    TargetsForTfmSpecificContentInPackage target instead - $(Pkg*) only resolve in the per-TFM inner
+	    build while pack collects static content at the outer evaluation.)
+	-->
+	<ItemGroup>
+		<PackageReference Include="Humanizer.Core" Version="[2.14.1]" GeneratePathProperty="true" PrivateAssets="all">
+			<ExcludeAssets Condition="'$(BundleCodeGenPayloadOnly)' == 'true'">compile;runtime</ExcludeAssets>
+		</PackageReference>
+		<PackageReference Include="Albatross.CodeAnalysis" Version="8.0.3" GeneratePathProperty="true" PrivateAssets="all">
+			<ExcludeAssets Condition="'$(BundleCodeGenPayloadOnly)' == 'true'">compile;runtime</ExcludeAssets>
+		</PackageReference>
+		<PackageReference Include="Albatross.CodeAnalysis.Polyfill" Version="8.0.3" GeneratePathProperty="true" PrivateAssets="all">
+			<ExcludeAssets Condition="'$(BundleCodeGenPayloadOnly)' == 'true'">compile;runtime</ExcludeAssets>
+		</PackageReference>
+		<PackageReference Include="Albatross.CodeGen" Version="9.0.6-rc.241" GeneratePathProperty="true" PrivateAssets="all">
+			<ExcludeAssets Condition="'$(BundleCodeGenPayloadOnly)' == 'true'">compile;runtime</ExcludeAssets>
+		</PackageReference>
+		<PackageReference Include="Albatross.CodeGen.CSharp" Version="9.0.6-rc.241" GeneratePathProperty="true" PrivateAssets="all">
+			<ExcludeAssets Condition="'$(BundleCodeGenPayloadOnly)' == 'true'">compile;runtime</ExcludeAssets>
+		</PackageReference>
+		<!-- Albatross.Collections and Albatross.Text overlap with Albatross.Messaging's OWN runtime
+		     dependencies. Declaring them here for the bundling project too would produce a duplicate
+		     PackageReference (NU1504) and lose GeneratePathProperty. So they are declared here ONLY for
+		     the generator project (which compiles against them); the bundling project (Albatross.Messaging)
+		     omits them and instead adds GeneratePathProperty to its own Collections/Text references, so
+		     $(Pkg*) still resolves for the None items below. -->
+		<PackageReference Include="Albatross.Collections" Version="8.0.1" GeneratePathProperty="true" PrivateAssets="all" Condition="'$(BundleCodeGenPayloadOnly)' != 'true'" />
+		<PackageReference Include="Albatross.Text" Version="[9.0.3]" GeneratePathProperty="true" PrivateAssets="all" Condition="'$(BundleCodeGenPayloadOnly)' != 'true'" />
+	</ItemGroup>
+	<ItemGroup>
+		<None Include="$(MSBuildThisFileDirectory)bin\$(Configuration)\netstandard2.0\Albatross.Messaging.CodeGen.dll" Pack="true" PackagePath="analyzers/dotnet/cs" Visible="false" />
+		<None Include="$(PkgHumanizer_Core)\lib\netstandard2.0\*.dll" Pack="true" PackagePath="analyzers/dotnet/cs" Visible="false" />
+		<None Include="$(PkgAlbatross_CodeAnalysis)\lib\netstandard2.0\*.dll" Pack="true" PackagePath="analyzers/dotnet/cs" Visible="false" />
+		<None Include="$(PkgAlbatross_CodeAnalysis_Polyfill)\lib\netstandard2.0\*.dll" Pack="true" PackagePath="analyzers/dotnet/cs" Visible="false" />
+		<None Include="$(PkgAlbatross_CodeGen)\lib\netstandard2.0\*.dll" Pack="true" PackagePath="analyzers/dotnet/cs" Visible="false" />
+		<None Include="$(PkgAlbatross_CodeGen_CSharp)\lib\netstandard2.0\*.dll" Pack="true" PackagePath="analyzers/dotnet/cs" Visible="false" />
+		<None Include="$(PkgAlbatross_Collections)\lib\netstandard2.0\*.dll" Pack="true" PackagePath="analyzers/dotnet/cs" Visible="false" />
+		<None Include="$(PkgAlbatross_Text)\lib\netstandard2.0\*.dll" Pack="true" PackagePath="analyzers/dotnet/cs" Visible="false" />
+	</ItemGroup>
+</Project>
