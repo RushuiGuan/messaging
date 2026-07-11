@@ -21,16 +21,16 @@
 		<PackageReference Include="Humanizer.Core" Version="[2.14.1]" GeneratePathProperty="true" PrivateAssets="all">
 			<ExcludeAssets Condition="'$(BundleCodeGenPayloadOnly)' == 'true'">compile;runtime</ExcludeAssets>
 		</PackageReference>
-		<PackageReference Include="Albatross.CodeAnalysis" Version="8.0.3" GeneratePathProperty="true" PrivateAssets="all">
+		<PackageReference Include="Albatross.CodeAnalysis" Version="[8.0.5]" GeneratePathProperty="true" PrivateAssets="all">
 			<ExcludeAssets Condition="'$(BundleCodeGenPayloadOnly)' == 'true'">compile;runtime</ExcludeAssets>
 		</PackageReference>
-		<PackageReference Include="Albatross.CodeAnalysis.Polyfill" Version="8.0.3" GeneratePathProperty="true" PrivateAssets="all">
+		<PackageReference Include="Albatross.CodeAnalysis.Polyfill" Version="[8.0.5]" GeneratePathProperty="true" PrivateAssets="all">
 			<ExcludeAssets Condition="'$(BundleCodeGenPayloadOnly)' == 'true'">compile;runtime</ExcludeAssets>
 		</PackageReference>
-		<PackageReference Include="Albatross.CodeGen" Version="9.0.6-rc.241" GeneratePathProperty="true" PrivateAssets="all">
+		<PackageReference Include="Albatross.CodeGen" Version="[9.0.6]" GeneratePathProperty="true" PrivateAssets="all">
 			<ExcludeAssets Condition="'$(BundleCodeGenPayloadOnly)' == 'true'">compile;runtime</ExcludeAssets>
 		</PackageReference>
-		<PackageReference Include="Albatross.CodeGen.CSharp" Version="9.0.6-rc.241" GeneratePathProperty="true" PrivateAssets="all">
+		<PackageReference Include="Albatross.CodeGen.CSharp" Version="[9.0.6]" GeneratePathProperty="true" PrivateAssets="all">
 			<ExcludeAssets Condition="'$(BundleCodeGenPayloadOnly)' == 'true'">compile;runtime</ExcludeAssets>
 		</PackageReference>
 		<!-- Albatross.Collections and Albatross.Text overlap with Albatross.Messaging's OWN runtime
@@ -39,7 +39,7 @@
 		     the generator project (which compiles against them); the bundling project (Albatross.Messaging)
 		     omits them and instead adds GeneratePathProperty to its own Collections/Text references, so
 		     $(Pkg*) still resolves for the None items below. -->
-		<PackageReference Include="Albatross.Collections" Version="8.0.1" GeneratePathProperty="true" PrivateAssets="all" Condition="'$(BundleCodeGenPayloadOnly)' != 'true'" />
+		<PackageReference Include="Albatross.Collections" Version="[8.0.1]" GeneratePathProperty="true" PrivateAssets="all" Condition="'$(BundleCodeGenPayloadOnly)' != 'true'" />
 		<PackageReference Include="Albatross.Text" Version="[9.0.3]" GeneratePathProperty="true" PrivateAssets="all" Condition="'$(BundleCodeGenPayloadOnly)' != 'true'" />
 	</ItemGroup>
 	<ItemGroup>

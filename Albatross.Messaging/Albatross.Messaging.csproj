@@ -10,13 +10,13 @@
 	<ItemGroup>
 		<!-- GeneratePathProperty so CodeGen.Payload.targets can bundle these DLLs into analyzers/dotnet/cs
 		     (they are also the generator's payload deps). These stay normal runtime dependencies. -->
-		<PackageReference Include="Albatross.Collections" Version="8.0.1" GeneratePathProperty="true" />
+		<PackageReference Include="Albatross.Collections" Version="[8.0.1]" GeneratePathProperty="true" />
 		<PackageReference Include="Albatross.Config" Version="8.0.0-rc.56" />
 		<PackageReference Include="Albatross.IO" Version="9.0.0" />
 		<PackageReference Include="Albatross.Math" Version="7.5.9" />
 		<PackageReference Include="Albatross.Reflection" Version="8.0.7" />
 		<PackageReference Include="Albatross.Serialization.Json" Version="10.0.0" />
-		<PackageReference Include="Albatross.Text" Version="9.0.3" GeneratePathProperty="true" />
+		<PackageReference Include="Albatross.Text" Version="[9.0.3]" GeneratePathProperty="true" />
 		<PackageReference Include="Albatross.Threading" Version="7.5.9" />
 		<PackageReference Include="CoenM.Encoding.Z85e" Version="1.2.1" />
 		<PackageReference Include="Microsoft.Extensions.Hosting.Abstractions" Version="10.0.9" />
