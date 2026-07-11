@@ -7,11 +7,11 @@
 		<PackageId>Albatross.Messaging.Utility</PackageId>
 		<PackAsTool>True</PackAsTool>
 		<ToolCommandName>msg</ToolCommandName>
-		<PackageProjectUrl>$(RepositoryProjectRoot)/Albatross.Messaging.Utility</PackageProjectUrl>
 	</PropertyGroup>
 	<ItemGroup>
-		<PackageReference Include="Albatross.CommandLine" Version="9.0.0-rc.264" />
-		<PackageReference Include="Albatross.CommandLine.Defaults" Version="9.0.0-rc.264" />
+		<PackageReference Include="Albatross.CommandLine" Version="9.0.0-rc.266" />
+		<PackageReference Include="Albatross.CommandLine.Defaults" Version="9.0.0-rc.266" />
+		<PackageReference Include="Albatross.CommandLine.Outputs" Version="9.0.0-rc.266" />
 		<ProjectReference Include="..\Albatross.Messaging\Albatross.Messaging.csproj" />
 	</ItemGroup>
 	<ItemGroup>

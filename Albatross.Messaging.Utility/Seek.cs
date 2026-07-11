@@ -1,5 +1,6 @@
 ﻿using Albatross.CommandLine;
 using Albatross.CommandLine.Annotations;
+using Albatross.CommandLine.Outputs;
 using Albatross.Messaging.EventSource;
 using Albatross.Messaging.Messages;
 using System;
@@ -37,7 +38,7 @@ namespace Albatross.Messaging.Utility {
 				conversation = await SearchFile(conversation, file, messageFactory, cancellationToken);
 			}
 			if (conversation != null) {
-				Console.Out.CliPrint(conversation, null);
+				conversation.Print(null, false, false);
 			}
 			return 0;
 		}

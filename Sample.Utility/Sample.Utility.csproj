@@ -10,7 +10,7 @@
 		<PackageReference Include="Albatross.CommandLine.Defaults" Version="8.0.2" />
 		<PackageReference Include="System.CommandLine" Version="2.0.2" />
 		<PackageReference Include="Albatross.Dates" Version="8.0.0" />
-		<PackageReference Include="Albatross.Serialization.Json" Version="10.0.0" />
+		<PackageReference Include="Albatross.Serialization.Json" Version="10.0.1" />
 		<ProjectReference Include="..\Sample.Core\Sample.Core.csproj" />
 		<ProjectReference Include="..\Sample.Proxy\Sample.Proxy.csproj" />
 	</ItemGroup>

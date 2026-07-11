@@ -7,12 +7,8 @@ using System;
 
 namespace Sample.WebApi {
 	public class Startup : Albatross.Hosting.Startup {
-		protected override bool OpenApi => true;
-		protected override bool WebApi => true;
-		protected override bool Spa => false;
-
-
-		public Startup(IConfiguration configuration) : base(configuration) { }
+		public Startup(IConfiguration configuration) : base(configuration) { 
+		}
 
 		public override void ConfigureServices(IServiceCollection services) {
 			base.ConfigureServices(services);
