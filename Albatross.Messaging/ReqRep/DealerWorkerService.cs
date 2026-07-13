@@ -7,7 +7,6 @@ using System;
 namespace Albatross.Messaging.ReqRep {
 	public class DealerWorkerService : IDealerClientService {
 		private readonly ILogger<DealerWorkerService> logger;
-		private WorkerState state;
 		private DateTime lastHeartbeat = DateTime.MinValue;
 
 		public bool CanReceive => true;
