@@ -4,10 +4,17 @@
 		<TargetFramework>netstandard2.0</TargetFramework>
 		<LangVersion>Latest</LangVersion>
 		<Nullable>Enable</Nullable>
+		<Description>A companion code generator used by the Albatross.Messaging library</Description>
 		<PackageTags>Analyzer;Roslyn</PackageTags>
 		<IncludeBuildOutput>false</IncludeBuildOutput>
 		<EnforceExtendedAnalyzerRules>true</EnforceExtendedAnalyzerRules>
 		<DevelopmentDependency>true</DevelopmentDependency>
+		<!-- Analyzer payload only: no lib output, so there are no symbols to pack. Disable the inherited
+		     IncludeSymbols (Directory.Build.props) - otherwise the empty .snupkg fails with NU5017. -->
+		<IncludeSymbols>false</IncludeSymbols>
+		<!-- All dependencies are bundled under analyzers/dotnet/cs; the package declares no runtime
+		     dependencies, so suppress the (empty) dependencies group that otherwise triggers NU5128. -->
+		<SuppressDependenciesWhenPacking>true</SuppressDependenciesWhenPacking>
 	</PropertyGroup>
 	<ItemGroup>
 		<!-- Roslyn is provided by the host compiler; never packed into the analyzer payload. -->
