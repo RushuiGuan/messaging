@@ -8,7 +8,6 @@
 		<IncludeBuildOutput>false</IncludeBuildOutput>
 		<EnforceExtendedAnalyzerRules>true</EnforceExtendedAnalyzerRules>
 		<DevelopmentDependency>true</DevelopmentDependency>
-		<PackageProjectUrl>$(RepositoryProjectRoot)/Albatross.Messaging.CodeGen</PackageProjectUrl>
 	</PropertyGroup>
 	<ItemGroup>
 		<!-- Roslyn is provided by the host compiler; never packed into the analyzer payload. -->
