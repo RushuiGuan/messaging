@@ -1,5 +1,6 @@
 # packages
 Albatross.Messaging.Core
+Albatross.Messaging.CodeGen
 Albatross.Messaging
 
 # tests
