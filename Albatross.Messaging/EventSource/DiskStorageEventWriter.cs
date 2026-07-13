@@ -11,6 +11,14 @@ namespace Albatross.Messaging.EventSource {
 	/// max size limit.  Once reached, a new file will be created.  When writing the log entry, data are bufferred line by line using
 	/// a <see cref="BufferedTextWriter"/> class.
 	/// </summary>
+	/// <remarks>
+	/// File names are derived from <see cref="DateTime.UtcNow"/> at millisecond precision (see
+	/// <see cref="Extensions.LogFileTimeStampFormat"/>). As a result the writer cannot create more than one distinct file per
+	/// millisecond: if two rollovers occur within the same millisecond, <see cref="NewFile"/> produces an identical name and the
+	/// existing file is reopened and appended to rather than a new file being created. This is harmless with a realistic
+	/// <see cref="DiskStorageConfiguration.MaxFileSize"/> (rollovers are far more than a millisecond apart), but tests that force
+	/// rapid rollovers with a tiny max size can observe fewer files than expected under CPU load.
+	/// </remarks>
 	public class DiskStorageEventWriter : IEventWriter, IDisposable {
 		private readonly Encoding utf8 = new UTF8Encoding(false);
 		private readonly DiskStorageConfiguration config;

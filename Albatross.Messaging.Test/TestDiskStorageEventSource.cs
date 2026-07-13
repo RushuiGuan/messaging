@@ -49,7 +49,7 @@ namespace Albatross.Messaging.Test {
 		[InlineData(25, 10, 11)]
 		[InlineData(1000, 50, 2)]
 		public async Task TestOutputFileSizeCheck(int maxFileSize, int messageCount, int expectedFileCount) {
-			var folder = $"c:\\temp\\{nameof(TestOutputFileSizeCheck)}\\{maxFileSize}-{messageCount}-{expectedFileCount}";
+			var folder = $"./{nameof(TestOutputFileSizeCheck)}/{maxFileSize}-{messageCount}-{expectedFileCount}";
 			CleanFolder(folder);
 
 			var config = new DiskStorageConfiguration(folder, "test-output") {
@@ -58,8 +58,14 @@ namespace Albatross.Messaging.Test {
 			using (var writer = GetWriter("test1", config)) {
 				int count = messageCount;
 				for (int i = 0; i < count; i++) {
-					writer.WriteEvent(new EventEntry(EntryType.Record, new TestMsg()));
+					// Delay BEFORE each write so that every file rollover lands in a distinct millisecond.
+					// The writer creates its first file in the constructor and the second file on the first
+					// WriteEvent; without this leading delay those two creations happen back-to-back and can
+					// share a millisecond-precision file name under CPU load (e.g. the full test suite),
+					// silently merging into a single file and failing the file-count assertion.
+					// See DiskStorageEventWriter for the underlying limitation.
 					await Task.Delay(100);
+					writer.WriteEvent(new EventEntry(EntryType.Record, new TestMsg()));
 				}
 			}
 			await Task.Delay(1000);
@@ -75,7 +81,7 @@ namespace Albatross.Messaging.Test {
 		[InlineData(1000, 100, 99)]
 		[InlineData(1000, 100, 98)]
 		public async Task TestReadOverMultipleFiles(int maxFileSize, int messageCount, int readMarkerIndex) {
-			var folder = $"c:\\temp\\{nameof(TestReadOverMultipleFiles)}_{maxFileSize}_{messageCount}_{readMarkerIndex}\\{Guid.NewGuid()}";
+			var folder = $"./{nameof(TestOutputFileSizeCheck)}/{nameof(TestReadOverMultipleFiles)}_{maxFileSize}_{messageCount}_{readMarkerIndex}\\{Guid.NewGuid()}";
 			var config = new DiskStorageConfiguration(folder, "test-output") {
 				MaxFileSize = maxFileSize,
 			};
