@@ -5,7 +5,7 @@
 		<Nullable>enable</Nullable>
 	</PropertyGroup>
 	<ItemGroup>
-		<PackageReference Include="Albatross.Config" Version="8.0.0-rc.56" />
+		<PackageReference Include="Albatross.Config" Version="8.0.1" />
 		<PackageReference Include="Albatross.Dates" Version="8.0.0" />
 		<PackageReference Include="Albatross.WebClient" Version="8.0.3" />
 		<ProjectReference Include="..\Sample.Core\Sample.Core.csproj" />
