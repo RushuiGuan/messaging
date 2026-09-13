@@ -11,15 +11,15 @@
 		     (they are also the generator's payload deps). These stay normal runtime dependencies. -->
 		<PackageReference Include="Albatross.Collections" Version="[8.0.1]" GeneratePathProperty="true" />
 		<PackageReference Include="Albatross.Text" Version="[9.0.3]" GeneratePathProperty="true" />
-		<PackageReference Include="Albatross.Config" Version="8.0.0-rc.56" />
+		<PackageReference Include="Albatross.Config" Version="8.0.1" />
 		<PackageReference Include="Albatross.IO" Version="9.0.0" />
 		<PackageReference Include="Albatross.Math" Version="7.5.9" />
 		<PackageReference Include="Albatross.Reflection" Version="8.0.7" />
 		<PackageReference Include="Albatross.Serialization.Json" Version="10.0.1" />
 		<PackageReference Include="Albatross.Threading" Version="7.5.9" />
 		<PackageReference Include="CoenM.Encoding.Z85e" Version="1.2.1" />
-		<PackageReference Include="Microsoft.Extensions.Hosting.Abstractions" Version="10.0.9" />
-		<PackageReference Include="NetMQ" Version="4.0.2.2" />
+		<PackageReference Include="Microsoft.Extensions.Hosting.Abstractions" Version="10.0.12" />
+		<PackageReference Include="NetMQ" Version="4.0.4.3" />
 		<ProjectReference Include="..\Albatross.Messaging.Core\Albatross.Messaging.Core.csproj" />
 		<ProjectReference Include="..\Albatross.Messaging.CodeGen\Albatross.Messaging.CodeGen.csproj">
 			<PrivateAssets>all</PrivateAssets>
@@ -27,6 +27,13 @@
 			<OutputItemType>Analyzer</OutputItemType>
 		</ProjectReference>
 	</ItemGroup>
+	<ItemGroup>
+		<PackageReference Include="Microsoft.SourceLink.GitHub" Version="10.0.401">
+			<PrivateAssets>all</PrivateAssets>
+			<IncludeAssets>runtime; build; native; contentfiles; analyzers; buildtransitive</IncludeAssets>
+		</PackageReference>
+	</ItemGroup>
+
 	<ItemGroup>
 		<None Include="..\icon.png">
 			<Pack>True</Pack>
